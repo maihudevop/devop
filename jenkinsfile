@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    environment {
+        name= 'ronak'
+       
+    }
+
+    stages {
+        stage('run a command') {
+            steps {
+                sh '''
+                date
+                ls
+                pwd
+                cal 2022
+                '''
+            }
+        }
+        stage('enviroment variable ') {
+            environment {
+        username= 'ronit'
+    }
+            steps {
+               sh 'echo "${BUILD_ID}"'
+               sh 'echo "${name}"'
+               sh 'echo "${username}"'
+            }
+        }
+        stage('build') {
+            steps {
+                echo 'build'
+                sh 'echo "${name}"'
+                sh 'echo "${username}"'
+            }
+        }
+        stage('continue ?') {
+            input{
+                message "should we continue?"
+                ok "yes we should"
+            }
+            steps {
+                echo 'build'
+                
+            }
+        }
+        stage('parameters') {
+            steps {
+                echo 'build'
+                sh 'echo "${name}"'
+                sh 'echo "${person}"'
+            }
+        }
+    }
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+        }
+    }
+}
